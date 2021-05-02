@@ -18,6 +18,10 @@ conn = psycopg2.connect(
     + " host=" + host,
     port = port 
 )
+if conn is None:
+    print("Xảy ra lỗi trong quá trình kết nối đến Database")
+else:
+    print("Kết nối đến PostgreSQL thành công")
 
 m_query = "SELECT *FROM Orders;"
 local_filename = "order_etract.csv"
