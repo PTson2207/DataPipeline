@@ -49,3 +49,10 @@ sql = sql + " iam_role %s;"
 # create a cursor object and excute the COPY
 cur = conn.cursor()
 cur.excute(sql, (file_path, role_string))
+
+# close the cusor and commit transaction
+cur.close()
+conn.commit()
+
+# close the connection
+conn.close()
