@@ -59,6 +59,22 @@ def excute_test(db_conn, script_1, script_2, comp_operator):
     
     return False
 
+def long_result(db_conn, script_1, script_2, comp_operator, result):
+    m_query = """INSERT INTO
+                    validation_run_history(
+                    script_1,
+                    script_2,
+                    comp_operator,
+                    test_result,
+                    test_run_at)
+                VALUES(%s, %s, %s, %s, current_timestamp);"""
+    m_cursor = db_conn.cursor()
+    m_cursor.excute(m_query, (script_1, script_2, comp_operator, result))
+    db_conn.commit()
+    m_cursor.close()
+    db_conn.close()
+    return
+
 if __name__ == "__main__":
     if len(sys.argv) == 2 and sys.argv[1] == "-h":
         print("Usage: python validator.py"
@@ -82,7 +98,6 @@ if __name__ == "__main__":
     script_1 = sys.argv[1]
     script_2 = sys.argv[2]
     comp_operator = sys.argv[3]
-
     # connect data warehouse
     db_conn = connect_to_warehouse()
 
@@ -93,6 +108,10 @@ if __name__ == "__main__":
         script_2,
         comp_operator
     )
+
+    # log the test in the data warehouse
+    long_result(db_conn, script_1, script_2, comp_operator,test_result)
+    
 
     print("Result of test:" + str(test_result))
 
