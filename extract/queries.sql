@@ -14,3 +14,18 @@ INSERT INTO Orders
     VALUES(1,'Shipped', '2020-06-09 11:50:00');
 INSERT INTO Orders
     VALUES(3,'Shipped', '2020-07-12 12:00:00');
+
+
+--full extraction
+
+SELECT *FROM Orders;
+
+--query theo kieu gia tang
+
+SELECT *FROM Orders;
+--WHERE LastUpdate {{ last_extraction_run }};
+-- last_extraction_run : đại diện cho thời gian chạy gần nhất
+
+-- trong datawarehouse
+SELECT  MAX(LastUpdate)
+FROM warehouse.Orders;
